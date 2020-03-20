@@ -8,20 +8,19 @@ class OrderSummary extends Component {
   componentDidUpdate() {
     console.log("[OrderSummary] DidUpdate");
   }
-
-  ingredientSummary = Object.keys(this.props.ingredients).map(ingKey => (
-    <li key={ingKey}>
-      <span style={{ textTransform: "capitalize" }}>{ingKey}</span>:
-      {" " + this.props.ingredients[ingKey]}
-    </li>
-  ));
+  
+  
   render() {
-    console.log(this.props.ingredients);
+    const ingredientSummary = Object.keys(this.props.ingredients).map(ingKey => (
+      <li key={ingKey}>
+        <span style={{ textTransform: "capitalize" }}>{ingKey}</span>: {this.props.ingredients[ingKey]}
+      </li>
+    ));
     return (
       <Aux>
         <h3>Your Order</h3>
         <p>A delicious burger with the following ingredients:</p>
-        <ul>{this.ingredientSummary}</ul>
+        <ul>{ingredientSummary}</ul>
         <p>
           <strong>Total price: {this.props.price.toFixed(2)}</strong>
         </p>
