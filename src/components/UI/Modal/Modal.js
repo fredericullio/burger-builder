@@ -1,12 +1,12 @@
 import React from "react";
 
 import classes from "./Modal.module.css";
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 import Backdrop from "../Backdrop/Backdrop";
 
 const modal = props => (
   <Aux>
-    <Backdrop show={props.show} clicked={props.modalClosed}/>
+    <Backdrop show={props.show} clicked={props.modalClosed} />
     <div
       className={classes.Modal}
       style={{
@@ -20,7 +20,10 @@ const modal = props => (
 );
 
 const areEqual = (prevProps, nextProps) => {
-  return prevProps.show ===nextProps.show;
-}
+  return (
+    prevProps.show === nextProps.show &&
+    nextProps.children === prevProps.children
+  );
+};
 
 export default React.memo(modal, areEqual);
