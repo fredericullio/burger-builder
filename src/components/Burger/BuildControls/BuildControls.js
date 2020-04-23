@@ -1,19 +1,41 @@
 import React from "react";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import classes from "./BuildControls.module.css";
 import BuildControl from "./BuildControl/BuildControl";
 
-const useStyles = makeStyles({
-  buildControls: {
-    boxShadow: "0 2px 1px 10px 0 #ccc",
-    padding: "10px 0",
+const useStyles = makeStyles({});
+
+const OrderButton = withStyles((theme) => ({
+  root: {
+    backgroundColor: "#DAD735",
+    outline: "none",
+    border: "1px solid #966909",
+    fontFamily: "inherit",
+    fontSize: "1.2em",
+    padding: "15px 30px",
+    color: "#966909",
+    boxShadow: "2px 2px 2px #966909",
+
+    "&:hover, :active": {
+      backgroundColor: "#A0DB41",
+      border: "1px solid #966909",
+      color: "#966909",
+      cursor: "pointer",
+    },
+    "&:disabled": {
+      backgroundColor: "#C7C6C6",
+      border: "1px solid #ccc",
+      color: "#888888",
+    },
+    "&:disabled:hover": {
+      cursor: "no-drop",
+    },
   },
-});
+}))(Button);
 
 const controls = [
   { label: "Salad", type: "salad" },
@@ -36,11 +58,15 @@ const BuildControls = (props) => {
       m="auto"
       pt="10px"
       pr="0"
-      className={classes.buildControls}
+      boxShadow={3}
     >
-      <p>
-        Current price: <strong>{props.price.toFixed(2)}</strong>
-      </p>
+      <Typography>
+        Current price:
+        <Box component="span" fontWeight="bold">
+          {` $${props.price.toFixed(2)}`}
+        </Box>
+      </Typography>
+
       {controls.map((ctrl) => (
         <BuildControl
           key={ctrl.label}
@@ -50,15 +76,15 @@ const BuildControls = (props) => {
           disabled={props.disabled[ctrl.type]}
         />
       ))}
-      <Button
-      variant="contained"
-      size="large"
-        onClick={props.ordered}
-        className={classes.OrderButton}
-        disabled={!props.purchasable}
-      >
-        ORDER NOW!
-      </Button>
+        <OrderButton
+          variant="contained"
+          size="large"
+          onClick={props.ordered}
+          className={classes.OrderButton}
+          disabled={!props.purchasable}
+        >
+          ORDER NOW!
+        </OrderButton>
     </Box>
   );
 };
