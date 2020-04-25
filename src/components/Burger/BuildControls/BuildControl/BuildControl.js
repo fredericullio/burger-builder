@@ -16,24 +16,13 @@ const ControlButton = withStyles((theme) => ({
     outline: "none",
     borderRadius: 0
   },
-  "&:disabled": {
-    backgroundColor: "#AC9980",
-    border: "1px solid #7E7365",
-    color: "#ccc",
-    cursor: "default",
-  },
-  "&:disabled:hover": {
-    backgroundColor: "#AC9980",
-    color: "#ccc",
-    cursor: "not-allowed",
-  },
 }))(Button);
 
 const useStyles = makeStyles({
   less: {
     backgroundColor: "#D39952",
     color: "white",
-    "&:hover, :active": {
+    "&:hover": {
       backgroundColor: "#DAA972",
       color: "white",
     },
@@ -41,7 +30,7 @@ const useStyles = makeStyles({
   more: {
     backgroundColor: "#8F5E1E",
     color: "white",
-    "&:hover, :active": {
+    "&:hover": {
       backgroundColor: "#99703F",
       color: "white",
     },

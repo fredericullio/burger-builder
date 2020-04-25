@@ -1,10 +1,22 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 // import Button from "../../UI/Button/Button";
 
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = (theme) => ({
+  btn: {
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 0,
+    marginRight: "5px",
+  },
+});
 
 class OrderSummary extends Component {
   //doesn't have to be a class
@@ -14,6 +26,8 @@ class OrderSummary extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     const ingredientSummary = Object.keys(this.props.ingredients).map(
       (ingKey) => (
         <li key={ingKey}>
@@ -23,23 +37,37 @@ class OrderSummary extends Component {
       )
     );
     return (
-      <Fragment>
+      <Paper elevation={10} style={{ padding: "50px" }}>
         <Typography variant="h4">Your Order</Typography>
-        <p>A delicious burger with the following ingredients:</p>
-        <ul>{ingredientSummary}</ul>
         <Typography>
-          <Box variant="span" fontWeight="bold">Total price: ${this.props.price.toFixed(2)}</Box>
-        
-         Continue to checkout?</Typography>
-          <Button onClick={this.props.purchaseCanceled} color="secondary">
-            <Box fontWeight="bold" fontSize={16}>CANCEL</Box>
+          A delicious burger with the following ingredients:
+        </Typography>
+        <List>{ingredientSummary}</List>
+        <Typography>
+          <Box component="span" fontWeight="bold">
+            Total price: ${this.props.price.toFixed(2)}
+          </Box>
+          <br /> Continue to checkout?
+        </Typography>
+        <Box display="flex" flexDirection="row" justifyContent="space-between" mt="20px">
+          <Button
+            className={classes.btn}
+            onClick={this.props.purchaseCanceled}
+            color="secondary"
+          >
+            CANCEL
           </Button>
-          <Button onClick={this.props.purchaseContinued} color="primary">
-            <Box fontWeight="bold" fontSize={16}>CONTINUE</Box>
+          <Button
+            className={classes.btn}
+            onClick={this.props.purchaseContinued}
+            color="primary"
+          >
+            CONTINUE
           </Button>
-      </Fragment>
+        </Box>
+      </Paper>
     );
   }
 }
 
-export default OrderSummary;
+export default withStyles(styles)(OrderSummary);

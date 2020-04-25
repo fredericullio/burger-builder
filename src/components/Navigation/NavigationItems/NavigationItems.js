@@ -1,12 +1,23 @@
 import React from "react";
 
-import classes from "./NavigationItems.module.css";
+import Box from "@material-ui/core/Box";
+
 import NavigationItem from "./NavigationItem/NavigationItem";
 
-const navigationItems = () => 
-<ul className={classes.NavigationItems}>
-    <NavigationItem link="/" active>Burger Builder</NavigationItem>
-    <NavigationItem link="/">Checkout</NavigationItem>
-</ul>;
+const NavigationItems = (props) => (
+  <Box display="flex" flexDirection={props.desktop ? "row" : "column"} mx="auto">
+    <NavigationItem active link="/" desktop={props.desktop}>
+      Burger Builder
+    </NavigationItem>
+    <NavigationItem link="/" desktop={props.desktop}>Checkout</NavigationItem>
+  </Box>
 
-export default navigationItems;
+  //   <React.Fragment>
+  //     <NavigationItem link="/" active>
+  //       Burger Builder
+  //     </NavigationItem>
+  //     <NavigationItem link="/">Checkout</NavigationItem>
+  //   </React.Fragment>
+);
+
+export default NavigationItems;

@@ -1,13 +1,12 @@
 import React from "react";
 
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 import BuildControl from "./BuildControl/BuildControl";
 
-const useStyles = makeStyles({});
 
 const OrderButton = withStyles((theme) => ({
   root: {
@@ -46,19 +45,20 @@ const controls = [
 ];
 
 const BuildControls = (props) => {
-  const classes = useStyles();
 
   return (
-    <Box
+      <Box
       display="flex"
       flexDirection="column"
       alignItems="center"
       width="100%"
       bgcolor="#CF8F2E"
-      m="auto"
+      margin={0}
       pt="10px"
       pr="0"
+      pb="10px"
       boxShadow={3}
+      boxSizing="border-box"
     >
       <Typography>
         Current price:
@@ -80,7 +80,6 @@ const BuildControls = (props) => {
           variant="contained"
           size="large"
           onClick={props.ordered}
-          className={classes.OrderButton}
           disabled={!props.purchasable}
         >
           ORDER NOW!

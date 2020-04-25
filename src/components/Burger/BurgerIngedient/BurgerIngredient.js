@@ -86,9 +86,9 @@ class BurgerIngredient extends Component {
       case "bread-bottom":
         ingredient = (
           <Box
-            height="13%"
-            width="80%"
-            mt="2%"
+            height={{xs: "40px", sm: "80px"}}
+            width={{xs: "250px", sm: "500px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             className={classes.breadBottom}
           />
@@ -97,9 +97,9 @@ class BurgerIngredient extends Component {
       case "bread-top":
         ingredient = (
           <Box
-            height="20%"
-            width="80%"
-            mt="2%"
+            height={{xs: "75px", sm: "150px"}}
+            width={{xs: "260px", sm: "520px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             position="relative"
             className={classes.breadTop}
@@ -130,9 +130,9 @@ class BurgerIngredient extends Component {
       case "meat":
         ingredient = (
           <Box
-            width="80%"
-            height="8%"
-            mt="2%"
+            width={{xs: "240px", sm: "480px"}}
+            height={{xs: "25px", sm: "50px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             borderRadius="15px"
             className={classes.meat}
@@ -142,9 +142,9 @@ class BurgerIngredient extends Component {
       case "cheese":
         ingredient = (
           <Box
-            width="90%"
-            height="4.5%"
-            mt="2%"
+            width={{xs: "300px", sm: "600px"}}
+            height={{xs: "10px", sm: "20px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             borderRadius="20px"
             className={classes.cheese}
@@ -154,9 +154,9 @@ class BurgerIngredient extends Component {
       case "salad":
         ingredient = (
           <Box
-            width="85%"
-            height="7%"
-            mt="2%"
+            width={{xs: "275px", sm: "550px"}}
+            height={{xs: "20px", sm: "40px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             borderRadius="20px"
             className={classes.salad}
@@ -166,9 +166,9 @@ class BurgerIngredient extends Component {
       case "bacon":
         ingredient = (
           <Box
-            width="80%"
-            height="3%"
-            mt="2%"
+            width={{xs: "265px", sm: "580px"}}
+            height={{xs: "6px", sm: "12px"}}
+            mt={{xs: "2px", sm: "5px"}}
             mx="auto"
             className={classes.bacon}
           />
@@ -177,10 +177,10 @@ class BurgerIngredient extends Component {
       case "tomato":
         ingredient = (
           <Box
-            width="70%"
-            height="6%"
+            width={{xs: "200px", sm: "400px"}}
+            height={{xs: "17px", sm: "35px"}}
             mx="auto"
-            mt="2%"
+            mt={{xs: "2px", sm: "5px"}}
             className={classes.tomato}
           />
         );
