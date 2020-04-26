@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 
 import BuildControl from "./BuildControl/BuildControl";
 
-
 const OrderButton = withStyles((theme) => ({
   root: {
     backgroundColor: "#DAD735",
@@ -19,7 +18,7 @@ const OrderButton = withStyles((theme) => ({
     color: "#966909",
     boxShadow: "2px 2px 2px #966909",
 
-    "&:hover, :active": {
+    "&:hover, &:active": {
       backgroundColor: "#A0DB41",
       border: "1px solid #966909",
       color: "#966909",
@@ -29,9 +28,6 @@ const OrderButton = withStyles((theme) => ({
       backgroundColor: "#C7C6C6",
       border: "1px solid #ccc",
       color: "#888888",
-    },
-    "&:disabled:hover": {
-      cursor: "no-drop",
     },
   },
 }))(Button);
@@ -45,9 +41,8 @@ const controls = [
 ];
 
 const BuildControls = (props) => {
-
   return (
-      <Box
+    <Box
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -76,14 +71,17 @@ const BuildControls = (props) => {
           disabled={props.disabled[ctrl.type]}
         />
       ))}
-        <OrderButton
-          variant="contained"
-          size="large"
-          onClick={props.ordered}
-          disabled={!props.purchasable}
-        >
-          ORDER NOW!
-        </OrderButton>
+      <span style={{cursor: !props.purchasable ? "not-allowed" : "pointer"}}>
+      <OrderButton
+        variant="contained"
+        size="large"
+        onClick={props.ordered}
+        disabled={!props.purchasable}
+      >
+        
+        ORDER NOW!
+      </OrderButton>
+      </span>
     </Box>
   );
 };

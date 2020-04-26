@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,11 +8,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import BurgerIngredient from "./BurgerIngedient/BurgerIngredient";
 
 const useStyles = makeStyles({
-    burger: {
-      "&::-webkit-scrollbar": {
-        display: "none"
-      }
-    }
+  burger: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
 });
 
 const Burger = (props) => {
@@ -31,24 +32,24 @@ const Burger = (props) => {
   const classes = useStyles();
 
   return (
-      <Box
-        className={classes.burger}
-        // mx="auto"
-        overflow="auto"
-        textAlign="center"
-        boxSizing="border-box"
-        fontWeight="bold"
-        fontSize="1.2rem"
-        flex=" 0 1 100%"
-        pb="20px"
-        pt="20px"
-        mx="auto"
-      >
-        <BurgerIngredient type="bread-top" />
-        {transformedIngredients}
-        <BurgerIngredient type="bread-bottom" />
-      </Box>
+    <Box
+      className={classes.burger}
+      // mx="auto"
+      overflow="auto"
+      textAlign="center"
+      boxSizing="border-box"
+      fontWeight="bold"
+      fontSize="1.2rem"
+      flex=" 0 1 100%"
+      pb="20px"
+      pt="20px"
+      mx="auto"
+    >
+      <BurgerIngredient type="bread-top" />
+      {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </Box>
   );
 };
 
-export default Burger;
+export default withRouter(Burger);
