@@ -15,17 +15,20 @@ const ControlButton = withStyles((theme) => ({
     cursor: "pointer",
     outline: "none",
     borderRadius: 0,
-    }
-  }
-))(Button);
+  },
+}))(Button);
 
 const useStyles = makeStyles({
   less: {
     backgroundColor: "#D39952",
     color: "white",
-    "&:hover": {
+    "&:hover, :active": {
       backgroundColor: "#DAA972",
       color: "white",
+    },
+    "&:disabled": {
+      backgroundColor: "#AC9980",
+      color: "#ccc",
     },
   },
   more: {
@@ -36,7 +39,6 @@ const useStyles = makeStyles({
       color: "white",
     },
   },
-  
 });
 
 const BuildControl = (props) => {
@@ -54,15 +56,14 @@ const BuildControl = (props) => {
       <Box p="10px" fontWeight="bold" width="80px">
         {props.label}
       </Box>
-      <span style={{cursor: props.disabled ? "not-allowed" : "pointer"}}>
-      <ControlButton
-      
-        disabled={props.disabled}
-        onClick={props.removed}
-        className={classes.less}
-      >
-        Less
-      </ControlButton>
+      <span style={{ cursor: props.disabled ? "not-allowed" : "pointer" }}>
+        <ControlButton
+          disabled={props.disabled}
+          onClick={props.removed}
+          className={classes.less}
+        >
+          Less
+        </ControlButton>
       </span>
       <ControlButton onClick={props.added} className={classes.more}>
         More

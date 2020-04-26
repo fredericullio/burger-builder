@@ -1,46 +1,49 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 
+import ContactData from "./ContactData/ContactData";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 
-
 class Checkout extends Component {
-    state = {
-        ingredients: {
-            salad: 1,
-            meat: 1,
-            cheese: 1,
-            bacon: 1,
-            tomato: 1
-        }
-    }
+  state = {
+    ingredients: {
+      salad: 1,
+      meat: 1,
+      cheese: 1,
+      bacon: 1,
+      tomato: 1,
+    },
+  };
 
-    componentDidMount() {
-        
-        const query = new URLSearchParams(this.props.location.search);
-        const ingredients = {};
-        for (let param of query.entries()) {
-            ingredients[param[0]] = +param[1];
-        }
-        this.setState({ingredients: ingredients});
+  componentDidMount() {
+    const query = new URLSearchParams(this.props.location.search);
+    const ingredients = {};
+    for (let param of query.entries()) {
+      ingredients[param[0]] = +param[1];
     }
+    this.setState({ ingredients: ingredients });
+  }
 
-    checkoutCancelHandler = () => {
-        this.props.history.goBack();
-    }
+  checkoutCancelHandler = () => {
+    this.props.history.goBack();
+  };
 
-    checkoutContinueHandler = () => {
-        this.props.history.replace("/checkout/contact-data");
-    }
+  checkoutContinueHandler = () => {
+    this.props.history.replace("/checkout/contact-data");
+  };
 
-    render() {
-        return(
-                <CheckoutSummary 
-                checkoutCancel={this.checkoutCancelHandler}
-                checkoutContinue={this.checkoutContinueHandler} 
-                ingredients={this.state.ingredients} />
-            
-        );
-    }
+  render() {
+    return (
+      <React.Fragment>
+        <CheckoutSummary
+          checkoutCancel={this.checkoutCancelHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+          ingredients={this.state.ingredients}
+        />
+        <Route path={this.props.match.path + "/contact-data"} component={ContactData} />
+      </React.Fragment>
+    );
+  }
 }
 
 export default Checkout;
