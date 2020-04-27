@@ -18,7 +18,7 @@ const OrderButton = withStyles((theme) => ({
     color: "#966909",
     boxShadow: "2px 2px 2px #966909",
 
-    "&:hover, &:active": {
+    "&:hover": {
       backgroundColor: "#A0DB41",
       border: "1px solid #966909",
       color: "#966909",

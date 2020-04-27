@@ -24,7 +24,7 @@ const CheckoutSummary = (props) => {
       mx="auto"
       display="flex"
       flexDirection="column"
-      justifyContent="space-between"
+      justifyContent="space-evenly"
       boxSizing="border-box"
     >
       <Typography align="center" variant="h1">Bon Apetit!</Typography>

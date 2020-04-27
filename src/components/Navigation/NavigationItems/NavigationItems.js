@@ -9,7 +9,7 @@ const NavigationItems = (props) => (
     <NavigationItem active link="/" desktop={props.desktop}>
       Burger Builder
     </NavigationItem>
-    <NavigationItem link="/" desktop={props.desktop}>Checkout</NavigationItem>
+    <NavigationItem link="/orders" desktop={props.desktop}>Orders</NavigationItem>
   </Box>
 
   //   <React.Fragment>

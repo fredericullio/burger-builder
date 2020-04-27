@@ -3,12 +3,13 @@ import React, { Fragment } from "react";
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 // import classes from "./SideDrawer.module.css";
-import Backdrop from "../../UI/Backdrop/Backdrop";
+// import Backdrop from "../../UI/Backdrop/Backdrop";
 
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
+import Backdrop from "@material-ui/core/Backdrop";
 
 const useStyles = makeStyles((theme) => ({
   hide: {
@@ -38,7 +39,7 @@ const SideDrawer = (props) => {
 
   return (
     <Fragment>
-      <Backdrop show={props.open} clicked={props.closed} />
+      <Backdrop style={{zIndex: 1}} open={props.open} onClick={props.closed} />
       <Drawer
         className={classes.drawer}
         variant="persistent"

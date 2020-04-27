@@ -5,8 +5,8 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import ProgressCircle from "../../components/UI/ProgressCircle/ProgressCircle";
 
 import Box from "@material-ui/core/Box";
 
@@ -17,6 +17,15 @@ const INGREDIENT_PRICES = {
   bacon: 0.6,
   tomato: 0.5,
 };
+
+// const ProgressCircle = withStyles((theme) => ({
+//   root: {
+//     margin: "auto",
+//     color: "#703B09",
+//     minWidth: "100px",
+//     minHeight: "100px"
+//   },
+// }))(CircularProgress);
 
 class BurgerBuilder extends Component {
   state = {
@@ -89,30 +98,20 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: "Maciej Kuchta",
-    //     address: "some address",
-    //     country: "Poland",
-    //     email: "some@mailbox.com",
-    //   },
-    //   deliveryMethod: "fastest",
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(() => this.setState({ loading: false, purchasing: false }))
-    //   .catch(() => this.setState({ loading: false, purchasing: false }));
+  
     const queryParams = [];
+    queryParams.push("price=" + this.state.totalPrice);
     for (let i in this.state.ingredients) {
-      queryParams.push(encodeURIComponent(i) + "=" + encodeURIComponent(this.state.ingredients[i]));
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
     }
     const queryString = queryParams.join("&");
     this.props.history.push({
       pathname: "/checkout",
-      search: "?" + queryString
+      search: "?" + queryString,
     });
   };
 
@@ -129,9 +128,11 @@ class BurgerBuilder extends Component {
     let burger = this.state.error ? (
       <p style={{ textAlign: "center" }}>Ingredients can't be loaded!</p>
     ) : (
-      <Spinner />
+      <ProgressCircle />
     );
-    let orderSummary = <Spinner />;
+    let orderSummary = (
+      <ProgressCircle />
+    );
     if (this.state.ingredients) {
       burger = <Burger ingredients={this.state.ingredients} />;
       if (!this.state.loading) {
