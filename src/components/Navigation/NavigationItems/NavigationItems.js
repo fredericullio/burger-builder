@@ -1,15 +1,16 @@
 import React from "react";
 
 import Box from "@material-ui/core/Box";
+import Typography from '@material-ui/core/Typography';
 
 import NavigationItem from "./NavigationItem/NavigationItem";
 
 const NavigationItems = (props) => (
   <Box display="flex" flexDirection={props.desktop ? "row" : "column"} mx="auto">
     <NavigationItem active link="/" desktop={props.desktop}>
-      Burger Builder
+      <Typography variant='button' style={{fontWeight: 'bold'}}>Burger Builder</Typography>
     </NavigationItem>
-    <NavigationItem link="/orders" desktop={props.desktop}>Orders</NavigationItem>
+    <NavigationItem link="/orders" desktop={props.desktop}><Typography variant='button' style={{fontWeight: 'bold'}}>Orders</Typography></NavigationItem>
   </Box>
 
   //   <React.Fragment>

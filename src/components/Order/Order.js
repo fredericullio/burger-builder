@@ -20,7 +20,7 @@ const Order = (props) => {
   ));
 
   return (
-    <ListItem>
+    <ListItem >
       <Box
         width="100%"
         border="1px solid #eee"
@@ -33,7 +33,7 @@ const Order = (props) => {
         <Box component="span" fontWeight="bold">
           {`Ingredients: `}
         </Box>
-        <Box display="flex" direction="row" justifyContent="center" mt="20px">
+        <Box display="flex" flexDirection={{xs: 'column', sm: 'row'}} justifyContent="center" mt="20px">
           {ingredientDisplay}
         </Box>
         <Typography>

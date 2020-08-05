@@ -21,13 +21,12 @@ const CheckoutSummary = (props) => {
     <Box
     height= "calc(100vh - 70px)"
       width="100%"
-      mx="auto"
       display="flex"
       flexDirection="column"
       justifyContent="space-evenly"
       boxSizing="border-box"
     >
-      <Typography align="center" variant="h1">Bon Apetit!</Typography>
+      <Typography align="center" variant="h2">Bon Apetit!</Typography>
       <Box width="100%" mx="auto">
         <Burger ingredients={props.ingredients} />
       </Box>

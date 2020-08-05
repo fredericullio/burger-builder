@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Burger from "../../components/Burger/Burger";
-import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import Modal from "../../components/UI/Modal/Modal";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import axios from "../../axios-orders";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import ProgressCircle from "../../components/UI/ProgressCircle/ProgressCircle";
+import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import ProgressCircle from '../../components/UI/ProgressCircle/ProgressCircle';
+import { withStyles } from '@material-ui/styles';
+import * as actions from '../../store/actions';
+import axios from '../../axios-orders';
 
-import Box from "@material-ui/core/Box";
-
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  cheese: 0.4,
-  meat: 1.3,
-  bacon: 0.6,
-  tomato: 0.5,
-};
+import Box from '@material-ui/core/Box';
 
 // const ProgressCircle = withStyles((theme) => ({
 //   root: {
@@ -27,24 +22,26 @@ const INGREDIENT_PRICES = {
 //   },
 // }))(CircularProgress);
 
-class BurgerBuilder extends Component {
-  state = {
-    ingredients: null,
-    totalPrice: 2,
-    purchasable: false,
-    purchasing: false,
-    loading: false,
-    error: false,
-  };
+const styles = (theme) => ({
+  brgrContainer: {
+    '&::-webkit-scrollbar': {
+      width: '10px',
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 5px #D39952',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#8F5E1E',
+      borderRadius: '10px'
+    }
+  },
+});
 
+class BurgerBuilder extends Component {
   componentDidMount() {
-    axios
-      .get("https://burger-builder-13728.firebaseio.com/Ingredients.json")
-      .then((res) => {
-        this.setState({ ingredients: res.data });
-        this.updatePurchaseState(this.state.ingredients);
-      })
-      .catch(() => this.setState({ error: true }));
+    if (!this.props.ingredients) {
+      this.props.initIngredients();
+    }
   }
 
   updatePurchaseState(ingredients) {
@@ -58,66 +55,14 @@ class BurgerBuilder extends Component {
     this.setState({ purchasable: sum > 0 });
   }
 
-  addIngredientHandler = (type) => {
-    const prevCount = this.state.ingredients[type];
-    const updatedCount = prevCount + 1;
-    const updatedIngredients = {
-      ...this.state.ingredients,
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = INGREDIENT_PRICES[type];
-    const prevPrice = this.state.totalPrice;
-    const newPrice = prevPrice + priceAddition;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-    this.updatePurchaseState(updatedIngredients);
-  };
-
-  removeIngredientHandler = (type) => {
-    const prevCount = this.state.ingredients[type];
-    if (prevCount === 0) {
-      return;
-    }
-    const updatedCount = prevCount - 1;
-    const updatedIngredients = {
-      ...this.state.ingredients,
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = INGREDIENT_PRICES[type];
-    const prevPrice = this.state.totalPrice;
-    const newPrice = prevPrice - priceDeduction;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-    this.updatePurchaseState(updatedIngredients);
-  };
-
-  purchaseHandler = () => {
-    this.setState({ purchasing: true });
-  };
-
-  purchaseCancelHandler = () => {
-    this.setState({ purchasing: false });
-  };
-
   purchaseContinueHandler = () => {
-  
-    const queryParams = [];
-    queryParams.push("price=" + this.state.totalPrice);
-    for (let i in this.state.ingredients) {
-      queryParams.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.state.ingredients[i])
-      );
-    }
-    const queryString = queryParams.join("&");
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString,
-    });
+    this.props.history.push('/checkout');
   };
 
   render() {
+    const { classes } = this.props;
     const disabledInfo = {
-      ...this.state.ingredients,
+      ...this.props.ingredients,
     };
     const disabledInfoKeys = Object.keys(disabledInfo);
     for (let i = 0; i < disabledInfoKeys.length; i++) {
@@ -125,56 +70,69 @@ class BurgerBuilder extends Component {
         disabledInfo[disabledInfoKeys[i]] === 0;
     }
 
-    let burger = this.state.error ? (
-      <p style={{ textAlign: "center" }}>Ingredients can't be loaded!</p>
-    ) : (
-      <ProgressCircle />
-    );
-    let orderSummary = (
-      <ProgressCircle />
-    );
-    if (this.state.ingredients) {
-      burger = <Burger ingredients={this.state.ingredients} />;
-      if (!this.state.loading) {
-        orderSummary = (
-          <OrderSummary
-            purchaseCanceled={this.purchaseCancelHandler}
-            purchaseContinued={this.purchaseContinueHandler}
-            ingredients={this.state.ingredients}
-            price={this.state.totalPrice}
-          />
-        );
-      }
-    }
-
     return (
       <React.Fragment>
         <Modal
-          show={this.state.purchasing}
-          modalClosed={this.purchaseCancelHandler}
+          show={this.props.purchasing}
+          modalClosed={this.props.purchaseOff}
         >
-          {orderSummary}
+          {this.props.ingredients ? (
+            <OrderSummary purchaseContinued={this.purchaseContinueHandler} />
+          ) : (
+            <ProgressCircle />
+          )}
         </Modal>
         <Box
-          height="calc(100vh - 72px)"
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          overflow="hidden"
+          height='calc(100vh - 72px)'
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-between'
+          alignItems='center'
         >
-          {burger}
-          <BuildControls
-            ingredientRemoved={this.removeIngredientHandler}
-            ingredientAdded={this.addIngredientHandler}
-            disabled={disabledInfo}
-            purchasable={this.state.purchasable}
-            price={this.state.totalPrice}
-            ordered={this.purchaseHandler}
-          />
+          {this.props.error ? (
+            <p style={{ textAlign: 'center' }}>Ingredients can't be loaded!</p>
+          ) : (
+            <Box
+              className={classes.brgrContainer}
+              width='100%'
+              height='100%'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              overflow='auto'
+            >
+              {this.props.ingredients ? (
+                <Burger />
+              ) : (
+                <ProgressCircle style={{ width: '30vh', height: '30vh' }} />
+              )}
+            </Box>
+          )}
+          <BuildControls ordered={this.purchaseHandler} />
         </Box>
       </React.Fragment>
     );
   }
 }
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    purchasable: state.burgerBuilder.purchasable,
+    purchasing: state.purchase.purchasing,
+    error: state.burgerBuilder.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initIngredients: () => dispatch(actions.initIngredients()),
+    purchaseOff: () => dispatch(actions.purchaseOff()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(withErrorHandler(BurgerBuilder, axios)));
