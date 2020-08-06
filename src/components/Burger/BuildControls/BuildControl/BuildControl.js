@@ -18,13 +18,12 @@ const ControlButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   less: {
-    backgroundColor: "#D39952",
+    backgroundColor: theme.palette.secondary.main,
     color: "white",
     "&:hover": {
       backgroundColor: "#DAA972",
-      color: "white",
     },
     "&:disabled": {
       backgroundColor: "#AC9980",
@@ -32,14 +31,13 @@ const useStyles = makeStyles({
     },
   },
   more: {
-    backgroundColor: "#8F5E1E",
+    backgroundColor: theme.palette.primary.main,
     color: "white",
     "&:hover": {
       backgroundColor: "#99703F",
-      color: "white",
     },
   },
-});
+}));
 
 const BuildControl = (props) => {
   const classes = useStyles();

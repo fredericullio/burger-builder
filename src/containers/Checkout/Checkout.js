@@ -11,7 +11,7 @@ class Checkout extends Component {
     contactDataOn: false,
   };
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.purchaseInit();
   }
 

@@ -11,6 +11,7 @@ const NavigationItems = (props) => (
       <Typography variant='button' style={{fontWeight: 'bold'}}>Burger Builder</Typography>
     </NavigationItem>
     <NavigationItem link="/orders" desktop={props.desktop}><Typography variant='button' style={{fontWeight: 'bold'}}>Orders</Typography></NavigationItem>
+    <NavigationItem link="/sign-in" desktop={props.desktop}><Typography variant='button' style={{fontWeight: 'bold'}}>Sign In</Typography></NavigationItem>
   </Box>
 
   //   <React.Fragment>

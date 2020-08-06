@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '../../../components/UI/Modal/Modal';
 import ProgressCircle from '../../../components/UI/ProgressCircle/ProgressCircle';
 import Input from '../../../components/UI/Input/Input';
+import { createConfig, checkFormValidity, checkFieldValidity } from '../../../util/formUtils';
 
 const DataButton = withStyles((theme) => ({
   root: {
@@ -21,112 +22,29 @@ const DataButton = withStyles((theme) => ({
 }))(Button);
 
 class ContactData extends Component {
-  createConfig = (
-    component,
-    type,
-    label,
-    value = '',
-    minLength = null,
-    maxLength = null
-  ) => {
-    switch (component) {
-      case 'textfield':
-        return {
-          component: component,
-          elementConfig: {
-            type: type,
-            label: label,
-          },
-          value: value,
-          validation: {
-            required: true,
-            minLength: minLength,
-            maxLength: maxLength,
-          },
-          valid: false,
-          touched: false,
-          errorMsg: null,
-        };
-      case 'select':
-        return {
-          component: component,
-          elementConfig: {
-            label: label,
-            options: [
-              { value: 'fastest', display: 'Fastest' },
-              { value: 'cheapest', display: 'Cheapest' },
-            ],
-          },
-          value: value,
-          validation: {
-            required: true,
-          },
-          valid: false,
-        };
-      default:
-        return null;
-    }
-  };
-
-
-
-  checkFieldValidity = (value, rules) => {
-    let isValid = true;
-    let helperText = null;
-
-    if (rules.required && isValid) {
-      isValid = value.trim() !== '';
-      if (!isValid) {
-        helperText = 'This field is required';
-      }
-    }
-
-    if (rules.minLength && isValid) {
-      isValid = value.trim().length >= rules.minLength;
-      if (!isValid) {
-        helperText = `This field requires at least ${rules.minLength} characters`;
-      }
-    }
-
-    if (rules.maxLength && isValid) {
-      isValid = value.trim().length <= rules.maxLength;
-      if (!isValid) {
-        helperText = `This field requires no more than ${rules.minLength} characters`;
-      }
-    }
-    return { isValid, helperText };
-  };
-
+ 
   state = {
     orderForm: {
-      firstName: this.createConfig('textfield', 'text', 'First Name'),
-      lastName: this.createConfig('textfield', 'text', 'Last Name'),
-      street: this.createConfig('textfield', 'text', 'Street'),
-      postalCode: this.createConfig(
+      firstName: createConfig('textfield', 'text', 'First Name', ''),
+      lastName: createConfig('textfield', 'text', 'Last Name', ''),
+      street: createConfig('textfield', 'text', 'Street', ''),
+      postalCode: createConfig(
         'textfield',
         'text',
         'Postal Code',
         '',
-        5,
-        5
+        null,
+        null,
+        true
       ),
-      country: this.createConfig('textfield', 'text', 'Country'),
-      email: this.createConfig('textfield', 'email', 'E-mail'),
-      delivery: this.createConfig('select', null, 'Delivery'),
+      country: createConfig('textfield', 'text', 'Country', ''),
+      email: createConfig('textfield', 'email', 'E-mail', ''),
+      delivery: createConfig('select', null, 'Delivery', ''),
     },
     isFormValid: false,
   };
 
-  checkFormValidity = () => {
-    const inputFields = Object.keys(this.state.orderForm);
-
-    for (let i = 0; i < inputFields.length; i++) {
-      if (!this.state.orderForm[inputFields[i]].valid) {
-        return false;
-      }
-    }
-    return true;
-  };
+  
 
   inputChangeHandler = (event, inputId) => {
     const newOrderForm = {
@@ -136,7 +54,7 @@ class ContactData extends Component {
       ...newOrderForm[inputId],
     };
     newFormElement.value = event.target.value;
-    const validityCheck = this.checkFieldValidity(
+    const validityCheck = checkFieldValidity(
       newFormElement.value,
       newFormElement.validation
     );
@@ -147,7 +65,7 @@ class ContactData extends Component {
     newOrderForm[inputId] = newFormElement;
     this.setState({ orderForm: newOrderForm });
     setTimeout(
-      () => this.setState({ isFormValid: this.checkFormValidity() }),
+      () => this.setState({ isFormValid: checkFormValidity(this.state.orderForm) }),
       10
     );
   };
@@ -228,7 +146,7 @@ class ContactData extends Component {
                             
                           >
                              
-                            <DataButton variant='contained' color='secondary'>
+                            <DataButton variant='contained' color='primary'>
                               NEXT
                             </DataButton>
                           </Link>

@@ -7,40 +7,21 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import ProgressCircle from '../../components/UI/ProgressCircle/ProgressCircle';
-import { withStyles } from '@material-ui/styles';
 import * as actions from '../../store/actions';
 import axios from '../../axios-orders';
 
 import Box from '@material-ui/core/Box';
 
-// const ProgressCircle = withStyles((theme) => ({
-//   root: {
-//     margin: "auto",
-//     color: "#703B09",
-//     minWidth: "100px",
-//     minHeight: "100px"
-//   },
-// }))(CircularProgress);
-
-const styles = (theme) => ({
-  brgrContainer: {
-    '&::-webkit-scrollbar': {
-      width: '10px',
-    },
-    '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 5px #D39952',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: '#8F5E1E',
-      borderRadius: '10px'
-    }
-  },
-});
-
 class BurgerBuilder extends Component {
   componentDidMount() {
     if (!this.props.ingredients) {
       this.props.initIngredients();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.purchasing) {
+      this.props.purchaseOff();
     }
   }
 
@@ -60,7 +41,6 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const disabledInfo = {
       ...this.props.ingredients,
     };
@@ -93,7 +73,6 @@ class BurgerBuilder extends Component {
             <p style={{ textAlign: 'center' }}>Ingredients can't be loaded!</p>
           ) : (
             <Box
-              className={classes.brgrContainer}
               width='100%'
               height='100%'
               display='flex'
@@ -135,4 +114,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(withErrorHandler(BurgerBuilder, axios)));
+)(withErrorHandler(BurgerBuilder, axios));

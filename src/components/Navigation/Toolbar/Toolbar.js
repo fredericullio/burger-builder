@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     padding: 0,
     margin: 0,
-    backgroundColor: "#703B09",
+    backgroundColor: theme.palette.primary.main,
     height: "70px",
     boxSizing: "border-box",
     transition: theme.transitions.create(["margin", "width"], {

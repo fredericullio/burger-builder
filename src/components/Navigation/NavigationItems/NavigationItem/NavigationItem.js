@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     transition: '0.3s ease-in-out',
     '&:hover': {
       borderBottom: '4px solid #40a4c8',
-      backgroundColor: '#8F5E1E',
+      backgroundColor: theme.palette.secondary.main,
       height: '100%',
       boxSizing: 'border-box',
     },
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   activeD: {
     borderBottom: '4px solid #40a4c8',
-    backgroundColor: '#8F5E1E',
+    backgroundColor: theme.palette.secondary.main,
     height: '100%',
     boxSizing: 'border-box',
   },

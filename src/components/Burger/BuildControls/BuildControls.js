@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -41,6 +42,7 @@ const controls = [
 ];
 
 const BuildControls = (props) => {
+  const theme = useTheme();
   const disabledInfo = {
     ...props.ingredients,
   };
@@ -55,7 +57,7 @@ const BuildControls = (props) => {
       flexDirection='column'
       alignItems='center'
       width='100%'
-      bgcolor='#CF8F2E'
+      bgcolor={theme.palette.secondary.light}
       margin={0}
       pt='10px'
       pr='0'
