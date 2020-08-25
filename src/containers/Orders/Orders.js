@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 
 import Order from '../../components/Order/Order';
@@ -12,9 +12,8 @@ import List from '@material-ui/core/List';
 import Box from '@material-ui/core/Box';
 
 class Orders extends Component {
-
   componentDidMount() {
-    this.props.fetchOrders();
+    this.props.fetchOrders(this.props.token);
   }
 
   render() {
@@ -35,6 +34,7 @@ class Orders extends Component {
               {this.props.orders.map((order) => (
                 <Order
                   key={order.id}
+                  id={order.id}
                   price={+order.price}
                   ingredients={order.ingredients}
                 />
@@ -47,13 +47,17 @@ class Orders extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   orders: state.order.orders,
-  loading: state.order.loading
+  loading: state.order.loading,
+  token: state.auth.token,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchOrders: () => dispatch(actions.fetchOrders())
+const mapDispatchToProps = (dispatch) => ({
+  fetchOrders: (token) => dispatch(actions.fetchOrders(token)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(Orders, axios));

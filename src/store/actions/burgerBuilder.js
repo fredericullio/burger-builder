@@ -26,15 +26,27 @@ export const setIngredients = (data) => {
   return {
     type: actionTypes.SET_INGREDIENTS,
     ingredients: data.Ingredients,
-    totalPrice: data.price
+    totalPrice: data.price,
   };
 };
 
 export const initIngredients = () => (dispatch) => {
-  axios
-    .get('https://burger-builder-13728.firebaseio.com/init.json')
-    .then((res) => {
-      dispatch(setIngredients(res.data));
-    })
-    .catch(() => this.setState(fetchIngredientsFailed()));
+  if (
+    localStorage.getItem('price') &&
+    localStorage.getItem('ingredients')
+  ) {
+    dispatch(
+      setIngredients({
+        Ingredients: JSON.parse(localStorage.getItem('ingredients')),
+        price: Number(localStorage.getItem('price')),
+      })
+    );
+  } else {
+    axios
+      .get('https://burger-builder-13728.firebaseio.com/init.json')
+      .then((res) => {
+        dispatch(setIngredients(res.data));
+      })
+      .catch(() => this.setState(fetchIngredientsFailed()));
+  }
 };

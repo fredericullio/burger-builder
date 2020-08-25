@@ -23,7 +23,7 @@ const Input = (props) => {
 
   switch (props.component) {
     case "textfield":
-       return <TextField  value={props.value} error={props.error} helperText={props.helperText} onChange={props.changed} className={classes.input} fullWidth {...props.elementConfig} variant="outlined" />;
+       return <TextField  disabled={props.disabled} value={props.value} error={props.error} helperText={props.helperText} onChange={props.changed} className={classes.input} fullWidth {...props.elementConfig} variant="outlined" />;
      
     case "select":
       return (

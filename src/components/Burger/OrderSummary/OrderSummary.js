@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
 
+import { withRouter } from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -49,8 +51,8 @@ const OrderSummary = (props) => {
         <StyledBtn onClick={props.purchaseOff} color='secondary'>
           CANCEL
         </StyledBtn>
-        <StyledBtn onClick={props.purchaseContinued} color='primary'>
-          CONTINUE
+        <StyledBtn onClick={props.isAuthenticated ? props.purchaseContinued : () => props.history.push('/sign-in')} color='primary'>
+          {props.isAuthenticated ? 'CONTINUE' : 'SIGN IN'}
         </StyledBtn>
       </Box>
     </Paper>
@@ -61,6 +63,7 @@ const mapStateToProps = (state) => {
   return {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
+    isAuthenticated: state.auth.token !== null
   };
 };
 
@@ -70,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderSummary));

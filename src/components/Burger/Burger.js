@@ -23,16 +23,12 @@ const Burger = (props) => {
 
   return (
     <Box
-      // mx="auto"
       textAlign='center'
       boxSizing='border-box'
       fontWeight='bold'
       fontSize='1.2rem'
-      pb='20px'
-      pt='20px'
-      mx='auto'
-      mt='auto'
-      mb='auto'
+      p='20px 0 20px'
+      m='auto'
     >
       <BurgerIngredient type='bread-top' />
       {transformedIngredients}

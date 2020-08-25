@@ -225,10 +225,11 @@ const mapStateToProps = (state) => ({
   price: state.burgerBuilder.totalPrice,
   ingredients: state.burgerBuilder.ingredients,
   loading: state.order.loading,
+  token: state.auth.token
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  orderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+  orderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
 });
 
 export default connect(

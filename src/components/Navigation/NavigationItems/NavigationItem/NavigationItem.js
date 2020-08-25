@@ -44,6 +44,7 @@ const NavigationItem = (props) => {
   return (
     <NavLink
       exact
+      onClick={props.onClick}
       className={props.desktop ? classes.btnDesktop : classes.btnMobile}
       activeClassName={props.desktop ? classes.activeD : classes.activeM}
       to={props.link}

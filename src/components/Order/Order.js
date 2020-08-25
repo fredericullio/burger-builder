@@ -14,13 +14,13 @@ const Order = (props) => {
   }
 
   const ingredientDisplay = ingredients.map((ing) => (
-    <Box boxShadow={5} mx={2} p={1}>
+    <Box key={ing.name + '-' + props.id} boxShadow={5} mx={2} p={1}>
       {ing.name} [{ing.amount}]
     </Box>
   ));
 
   return (
-    <ListItem >
+    <ListItem>
       <Box
         width="100%"
         border="1px solid #eee"

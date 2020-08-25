@@ -12,20 +12,6 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
     fontSize: 16,
   },
-
-  container: {
-    '&::-webkit-scrollbar': {
-      width: '10px',
-    },
-    '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 5px #D39952',
-      borderRadius: '10px',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: '#8F5E1E',
-      borderRadius: '10px',
-    },
-  },
 });
 
 const CheckoutSummary = (props) => {
@@ -41,9 +27,9 @@ const CheckoutSummary = (props) => {
       boxSizing='border-box'
     >
       <Typography align='center' variant='h2'>
-        Bon Apetit!
+      <em>Bon Appétit</em>
       </Typography>
-      <Box width='100%' mx='auto' overflow='auto' className={classes.container}>
+      <Box width='100%' mx='auto' overflow='auto'>
         <Burger ingredients={props.ingredients} />
       </Box>
       <Box

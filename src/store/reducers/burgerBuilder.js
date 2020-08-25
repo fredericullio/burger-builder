@@ -34,6 +34,8 @@ const brgBldrReducer = (state = initialState, action) => {
         ...state.ingredients,
         [action.ingredientType]: state.ingredients[action.ingredientType] + 1,
       };
+      localStorage.setItem('price', state.totalPrice + INGREDIENT_PRICES[action.ingredientType]);
+      localStorage.setItem('ingredients', JSON.stringify(updatedIngredients));
       return {
         ...state,
         totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientType],
@@ -45,6 +47,8 @@ const brgBldrReducer = (state = initialState, action) => {
         ...state.ingredients,
         [action.ingredientType]: state.ingredients[action.ingredientType] - 1,
       };
+      localStorage.setItem('price', state.totalPrice - INGREDIENT_PRICES[action.ingredientType]);
+      localStorage.setItem('ingredients', updatedIngredients);
       return {
         ...state,
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientType],
