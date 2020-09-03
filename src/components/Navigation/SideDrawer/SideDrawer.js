@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import Logo from "../../Logo/Logo";
+import RotatingLogo from '../../UI/RotatingLogo/RotatingLogo';
 import NavigationItems from "../NavigationItems/NavigationItems";
 // import classes from "./SideDrawer.module.css";
 // import Backdrop from "../../UI/Backdrop/Backdrop";
@@ -50,11 +50,11 @@ const SideDrawer = (props) => {
         }}
       >
         <IconButton onClick={props.closed}>
-          <Box height="100px" mx="auto">
-            <Logo />
+          <Box height="100px" m="30px auto">
+            <RotatingLogo />
           </Box>
         </IconButton>
-        <NavigationItems/>
+        <NavigationItems closeSideDrawer={props.closed}/>
       </Drawer>
     </Fragment>
   );

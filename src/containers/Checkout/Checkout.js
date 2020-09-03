@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
+import {  Redirect } from "react-router-dom";
 import {connect} from 'react-redux';
 
-import ContactData from "./ContactData/ContactData";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import * as actions from '../../store/actions';
 
@@ -20,7 +19,7 @@ class Checkout extends Component {
   };
 
   checkoutContinueHandler = () => {
-    this.props.history.replace("/checkout/contact-data");
+    this.props.history.replace("/contact-data");
     this.setState({ contactDataOn: true });
   };
 
@@ -35,17 +34,6 @@ class Checkout extends Component {
           checkoutCancel={this.checkoutCancelHandler}
           checkoutContinue={this.checkoutContinueHandler}
           ingredients={this.props.ingredients}
-        />
-        <Route
-          path={this.props.match.path + "/contact-data"}
-          render={(props) => (
-            <ContactData
-              on={this.state.contactDataOn}
-              off={this.closeDataInput}
-              price={this.props.totalPrice}
-              {...props}
-            />
-          )}
         /></React.Fragment> : <Redirect to='/' />}
       </React.Fragment>
     );

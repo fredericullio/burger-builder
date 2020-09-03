@@ -2,36 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
 
+import RotatingLogo from '../../UI/RotatingLogo/RotatingLogo';
+
 import { withRouter } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
 
-const StyledBtn = withStyles((theme) => ({
-  root: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    padding: 0,
-    marginRight: '5px',
-  },
-}))(Button);
+import PaperButton from '../../UI/PaperButton/PaperButton';
 
 const OrderSummary = (props) => {
-  const ingredientSummary = Object.keys(props.ingredients).map(
-    (ingKey) => (
-      <li key={ingKey}>
-        <span style={{ textTransform: 'capitalize' }}>{ingKey}</span>:{' '}
-        {props.ingredients[ingKey]}
-      </li>
-    )
-  );
+  const ingredientSummary = Object.keys(props.ingredients).map((ingKey) => (
+    <li key={ingKey}>
+      <span style={{ textTransform: 'capitalize' }}>{ingKey}</span>:{' '}
+      {props.ingredients[ingKey]}
+    </li>
+  ));
   return (
-    <Paper elevation={10} style={{ padding: '50px' }}>
-      <Typography variant='h4' align='center'>Your Order</Typography>
+    <Paper elevation={10} style={{ padding: '50px 50px 20px' }}>
+      <RotatingLogo />
+
+      <Typography variant='h4' align='center'>
+        Your Order
+      </Typography>
       <Typography>
         A delicious burger with the following ingredients:
       </Typography>
@@ -48,12 +43,25 @@ const OrderSummary = (props) => {
         justifyContent='space-between'
         mt='20px'
       >
-        <StyledBtn onClick={props.purchaseOff} color='secondary'>
-          CANCEL
-        </StyledBtn>
-        <StyledBtn onClick={props.isAuthenticated ? props.purchaseContinued : () => props.history.push('/sign-in')} color='primary'>
+        <PaperButton onClick={props.purchaseOff} color='secondary' variant='contained'>
+        CANCEL
+        </PaperButton>
+        <PaperButton
+          onClick={() => {
+            props.purchaseOff();
+            setTimeout(
+              () =>
+                props.isAuthenticated
+                  ? props.purchaseContinued()
+                  : props.history.push('/sign-in'),
+              150
+            );
+          }}
+          color='primary'
+          variant='contained'
+        >
           {props.isAuthenticated ? 'CONTINUE' : 'SIGN IN'}
-        </StyledBtn>
+        </PaperButton>
       </Box>
     </Paper>
   );
@@ -63,14 +71,10 @@ const mapStateToProps = (state) => {
   return {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    purchaseOff: () => dispatch(actions.purchaseOff()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderSummary));
+export default connect(
+  mapStateToProps
+)(withRouter(OrderSummary));

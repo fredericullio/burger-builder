@@ -13,8 +13,14 @@ import Box from '@material-ui/core/Box';
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.fetchOrders(this.props.token);
+    this.props.fetchOrders(this.props.token, this.props.userId);
   }
+
+  compareDates = (a, b) => {
+    if (a.date > b.date) return -1;
+    else if (a.date < b.date) return 1;
+    return 0;
+  };
 
   render() {
     return (
@@ -31,11 +37,13 @@ class Orders extends Component {
         ) : (
           <Box width={{ xs: '90%', sm: 'auto' }} height='100%'>
             <List>
-              {this.props.orders.map((order) => (
+              {this.props.orders.sort(this.compareDates).map((order) => (
                 <Order
+                data={order.formData}
                   key={order.id}
                   id={order.id}
                   price={+order.price}
+                  date={order.date}
                   ingredients={order.ingredients}
                 />
               ))}
@@ -51,10 +59,11 @@ const mapStateToProps = (state) => ({
   orders: state.order.orders,
   loading: state.order.loading,
   token: state.auth.token,
+  userId: state.auth.userId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchOrders: (token) => dispatch(actions.fetchOrders(token)),
+  fetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
 });
 
 export default connect(

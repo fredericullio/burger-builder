@@ -9,7 +9,7 @@ const Logout = (props) => {
   useEffect(() => {
     props.initIgredients();
     props.logout();
-  }, []);
+  }, [props]);
 
   return <Redirect to='/' />;
 };

@@ -3,9 +3,10 @@ import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
 
-const ModalElement = (props) => (
+const ModalElement = (props) => {
+  return (
   <Modal
     open={props.show}
     onClose={props.modalClosed}
@@ -14,13 +15,14 @@ const ModalElement = (props) => (
     BackdropProps={{
       timeout: 500,
     }}
+    
     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'auto' }}
   >
     <Slide direction='down' in={props.show} timeout={{ enter: 500, exit: 500 }}>
-      <Box display='flex' alignItems='center' justifyContent='center'>{props.children}</Box>
+      <Box   display='flex' alignItems='center' justifyContent='center'>{props.children}</Box>
     </Slide>
   </Modal>
-);
+)};
 
 const areEqual = (prevProps, nextProps) => {
   return (

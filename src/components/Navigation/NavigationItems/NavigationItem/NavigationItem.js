@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '4px solid transparent',
     transition: '0.3s ease-in-out',
     '&:hover': {
-      borderBottom: '4px solid #40a4c8',
+      borderBottom: `4px solid ${theme.palette.info.main}`,
       backgroundColor: theme.palette.secondary.main,
       height: '100%',
       boxSizing: 'border-box',

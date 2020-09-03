@@ -35,6 +35,8 @@ export const purchaseBurger = (orderData, token) => (dispatch) => {
   axios
     .post('/orders.json?auth=' + token, orderData)
     .then((res) => {
+      localStorage.removeItem('ingredients');
+      localStorage.removeItem('price');
       dispatch(purchaseBurgerSuccess());
       dispatch(actions.purchaseOff());
       dispatch(actions.initIngredients());
@@ -44,41 +46,47 @@ export const purchaseBurger = (orderData, token) => (dispatch) => {
 
 export const fetchOrdersStart = () => {
   return {
-    type: actionTypes.FETCH_ORDERS_START
-  }
-}
+    type: actionTypes.FETCH_ORDERS_START,
+  };
+};
 
-export const fetchOrdersSuccess = orders => {
+export const fetchOrdersSuccess = (orders) => {
   return {
     type: actionTypes.FETCH_ORDERS_SUCCESS,
-    orders
-  }
-}
+    orders,
+  };
+};
 
-export const fetchOrdersFailure = err => {
+export const fetchOrdersFailure = (err) => {
   return {
     type: actionTypes.FETCH_ORDERS_FAILURE,
-    err
-  }
-}
+    err,
+  };
+};
 
-export const fetchOrders = (token) => dispatch => {
+export const fetchOrders = (token, userId) => (dispatch) => {
   dispatch(fetchOrdersStart());
   axios
-      .get('/orders.json?auth=' + token)
-      .then((res) => {
-        const fetchedOrders = [];
-        for (let key in res.data) {
-          fetchedOrders.push({
-            ...res.data[key],
-            id: key,
-          });
-        }
-        dispatch(fetchOrdersSuccess(fetchedOrders));
-        // this.setState({ loading: false, orders: fetchedOrders });
-      })
-      .catch((err) => {
-        dispatch(fetchOrdersFailure(err));
-        // this.setState({ loading: false });
-      });
-}
+    .get(
+      '/orders.json?auth=' +
+        token +
+        '&orderBy="userId"&equalTo="' +
+        userId +
+        '"'
+    )
+    .then((res) => {
+      const fetchedOrders = [];
+      for (let key in res.data) {
+        fetchedOrders.push({
+          ...res.data[key],
+          id: key,
+        });
+      }
+      dispatch(fetchOrdersSuccess(fetchedOrders));
+      // this.setState({ loading: false, orders: fetchedOrders });
+    })
+    .catch((err) => {
+      dispatch(fetchOrdersFailure(err));
+      // this.setState({ loading: false });
+    });
+};

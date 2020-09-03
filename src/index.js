@@ -6,18 +6,25 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './util/theme';
+import createSagaMiddleware from 'redux-saga';
+
+import { logoutSaga } from './store/sagas/auth';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducers/index';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const sagaMiddleware = createSagaMiddleware();
+
+const composeEnhancers = (process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 
 const store = createStore(
   reducer,
-  composeEnhancers(compose(applyMiddleware(thunk)))
+  composeEnhancers((applyMiddleware(thunk, sagaMiddleware)))
 );
+
+sagaMiddleware.run(logoutSaga);
 
 ReactDOM.render(
   <Provider store={store}>

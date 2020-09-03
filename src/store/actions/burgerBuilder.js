@@ -30,6 +30,14 @@ export const setIngredients = (data) => {
   };
 };
 
+export const addDeliveryCost = (newMethod, oldMethod) => {
+  return {
+    type: actionTypes.ADD_DELIVERY_COST,
+    newMethod,
+    oldMethod
+  }
+}
+
 export const initIngredients = () => (dispatch) => {
   if (
     localStorage.getItem('price') &&

@@ -33,8 +33,8 @@ export const createConfig = (
           elementConfig: {
             label: label,
             options: [
-              { value: 'fastest', display: 'Fastest' },
-              { value: 'cheapest', display: 'Cheapest' },
+              { value: 'fastest', display: 'Fastest (+$1)' },
+              { value: 'cheapest', display: 'Cheapest (+$0.5)' },
             ],
           },
           value: value,

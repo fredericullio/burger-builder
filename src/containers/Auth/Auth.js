@@ -3,22 +3,50 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+import RotatingLogo from '../../components/UI/RotatingLogo/RotatingLogo';
+import PaperButton from '../../components/UI/PaperButton/PaperButton';
 import Input from '../../components/UI/Input/Input';
 import * as formUtils from '../../util/formUtils';
 import { Typography, Paper } from '@material-ui/core';
 
-const DataButton = withStyles((theme) => ({
-  root: {
-    fontWeight: 'bold',
-    fontSize: 16,
+const styles = (theme) => ({
+  '@keyframes trans': {
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(359deg)',
+    },
   },
-}))(Button);
+  '@keyframes bump': {
+    '0%': {
+      transform: 'scale(1,1)',
+    },
+    '50%': {
+      transform: 'scale(0,0)',
+    },
+    '100%': {
+      transform: 'scale(1,1)',
+    },
+  },
+  textBump: {
+    animation: '$bump 0.3s ease-out',
+  },
+  root: {
+    animation: '$trans 0.3s ease-in-out',
+  },
+  paper: {
+    [theme.breakpoints.down('sm')]: {
+      transform: 'scale(0.9)',
+    },
+    padding: '50px 25px 25px 25px'
+  },
+});
 
 class Auth extends Component {
   state = {
@@ -34,7 +62,15 @@ class Auth extends Component {
     },
     isFormValid: false,
     isSignIn: false,
+    addAnimation: false,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isSignIn !== this.state.isSignIn) {
+      this.setState({ addAnimation: true });
+      setTimeout(() => this.setState({ addAnimation: false }), 300);
+    }
+  }
 
   inputChangeHandler = (event, inputId) => {
     const validityCheck = formUtils.checkFieldValidity(
@@ -76,70 +112,107 @@ class Auth extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
-      {this.props.isAuthenticated && (this.props.purchasable ? <Redirect to='/checkout' /> : <Redirect to='/' />)}
-      <Box
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='center'
-        pt='100px'
-        mx='auto'
-        width='100%'
-        textAlign='center'
-      >
-        <Paper elevation={5} style={{ padding: '50px 25px 0 25px' }}>
-          <Typography variant='h3'>
-            {`SIGN ${this.state.isSignIn ? 'IN' : 'UP'}`}
-          </Typography>
-          <Box p='30px'>
-            {Object.keys(this.state.authForm).map((formElement) => {
-              return (
-                <Input
-                  disabled={this.props.loading}
-                  value={this.state.authForm[formElement].value}
-                  error={
-                    !this.state.authForm[formElement].valid &&
-                    this.state.authForm[formElement].touched
-                  }
-                  helperText={this.state.authForm[formElement].errorMsg}
-                  changed={(event) =>
-                    this.inputChangeHandler(event, formElement)
-                  }
-                  key={formElement}
-                  {...this.state.authForm[formElement]}
-                />
-              );
-            })}
-            {this.props.error && <Typography style={{color: 'red'}}> {this.props.error.message} </Typography>}
-          </Box>
-          <Box
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            justifyContent='space-evenly'
-            height='150px'
+        {this.props.isAuthenticated &&
+          (this.props.purchasable ? (
+            <Redirect to='/checkout' />
+          ) : (
+            <Redirect to='/' />
+          ))}
+        <Box
+          display='flex'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          width='100%'
+          height='calc(100vh - 70px)'
+          textAlign='center'
+        >
+          <Paper
+            elevation={5}
+            className={classes.paper}
           >
-            <DataButton
-              onClick={this.submitHandler}
-              variant='contained'
-              color='primary'
-              disabled={!this.state.isFormValid || this.props.loading}
+            <RotatingLogo />
+            <Typography
+              className={this.state.addAnimation ? classes.root : null}
+              variant='h3'
             >
-              {this.props.loading ? 'CONNECTING...' : 'ACCEPT'}
-            </DataButton>
-            <DataButton
-              onClick={this.switchSignInSignUp}
-              color='secondary'
-              disableRipple
-              disabled={this.props.loading}
+              {`SIGN ${this.state.isSignIn ? 'IN' : 'UP'}`}
+            </Typography>
+            <Box p='30px'>
+              {Object.keys(this.state.authForm).map((formElement) => {
+                return (
+                  <Input
+                    disabled={this.props.loading}
+                    value={this.state.authForm[formElement].value}
+                    error={
+                      !this.state.authForm[formElement].valid &&
+                      this.state.authForm[formElement].touched
+                    }
+                    helperText={this.state.authForm[formElement].errorMsg}
+                    changed={(event) =>
+                      this.inputChangeHandler(event, formElement)
+                    }
+                    key={formElement}
+                    {...this.state.authForm[formElement]}
+                  />
+                );
+              })}
+              {this.props.error && (
+                <Typography style={{ color: 'red' }}>
+                  {' '}
+                  {this.props.error.message}{' '}
+                </Typography>
+              )}
+            </Box>
+            <Box
+              display='flex'
+              flexDirection='column'
+              alignItems='center'
+              justifyContent='space-between'
+              height='120px'
             >
-              {`SWITCH TO SIGN ${this.state.isSignIn ? 'UP' : 'IN'}`}
-            </DataButton>
-          </Box>
-        </Paper>
-      </Box>
+              <PaperButton
+                onClick={this.submitHandler}
+                variant='contained'
+                color='primary'
+                disabled={!this.state.isFormValid || this.props.loading}
+              >
+                {this.props.loading ? 'CONNECTING...' : 'ACCEPT'}
+              </PaperButton>
+              <Box >
+                <Typography
+                  className={this.state.addAnimation ? classes.textBump : null}
+                  color='secondary'
+                >
+                  {this.state.isSignIn
+                    ? "Don't have an account?"
+                    : 'Have an account already?'}
+                </Typography>
+                <PaperButton
+                  onClick={this.switchSignInSignUp}
+                  color='secondary'
+                  disableRipple
+                  disabled={this.props.loading}
+                >
+                    SWITCH TO SIGN
+                    <Box
+                      component='span'
+                      display='inline-block'
+                      ml='5px'
+                      className={
+                        this.state.addAnimation ? classes.textBump : null
+                      }
+                    >
+                      {this.state.isSignIn ? 'UP' : 'IN'}
+                    </Box>
+                </PaperButton>
+              </Box>
+            </Box>
+          </Paper>
+        </Box>
       </React.Fragment>
     );
   }
@@ -150,6 +223,7 @@ const mapStateToProps = (state) => ({
   error: state.auth.error,
   isAuthenticated: state.auth.token !== null,
   purchasable: state.burgerBuilder.purchasable,
+  ingredients: state.burgerBuilder.ingredients,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -157,4 +231,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actions.auth(email, password, isSignIn)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default 
+  connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Auth)
+);

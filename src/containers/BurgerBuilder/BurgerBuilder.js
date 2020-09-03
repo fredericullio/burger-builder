@@ -12,18 +12,30 @@ import axios from '../../axios-orders';
 
 import Box from '@material-ui/core/Box';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
+  state = {
+    purchasing: false
+  };
+
+  purchasingOn = () => {
+    this.setState({purchasing: true})
+  }
+
+  purchasingOff = () => {
+    this.setState({purchasing: false});
+  }
+
   componentDidMount() {
     if (!this.props.ingredients) {
       this.props.initIngredients();
     }
   }
 
-  componentWillUnmount() {
-    if (this.props.purchasing) {
-      this.props.purchaseOff();
-    }
-  }
+  // componentWillUnmount() {
+  //   if (this.props.purchasing) {
+  //     this.props.purchaseOff();
+  //   }
+  // }
 
 
   purchaseContinueHandler = () => {
@@ -43,11 +55,11 @@ class BurgerBuilder extends Component {
     return (
       <React.Fragment>
         <Modal
-          show={this.props.purchasing}
-          modalClosed={this.props.purchaseOff}
+          show={this.state.purchasing}
+          modalClosed={this.purchasingOff}
         >
           {this.props.ingredients ? (
-            <OrderSummary purchaseContinued={this.purchaseContinueHandler} />
+            <OrderSummary purchaseOff={this.purchasingOff} purchaseContinued={this.purchaseContinueHandler} />
           ) : (
             <ProgressCircle />
           )}
@@ -71,13 +83,13 @@ class BurgerBuilder extends Component {
               overflow='auto'
             >
               {this.props.ingredients ? (
-                <Burger />
+                <Burger ingredients={this.props.ingredients}/>
               ) : (
                 <ProgressCircle style={{ width: '30vh', height: '30vh' }} />
               )}
             </Box>
           )}
-          <BuildControls ordered={this.purchaseHandler} />
+          <BuildControls purchasing={this.state.purchasing} purchaseOn={this.purchasingOn} ordered={this.purchaseHandler} />
         </Box>
       </React.Fragment>
     );
