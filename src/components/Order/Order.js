@@ -45,7 +45,8 @@ const Order = (props) => {
               borderRadius='6px'
               boxSizing='border-box'
               display='flex'
-              maxWidth={{xs: '100%', sm: '320px', lg: '250px'}}
+              maxWidth={{ sm: '320px', lg: '250px'}}
+              width={{xs: '100%', sm: 'auto'}}
               padding='20px'
               marginBottom='20px'
               boxShadow='gray 3px 3px 6px'
@@ -66,7 +67,7 @@ const Order = (props) => {
               </Box>
             </Typography>
           </Box>
-          <Box display='flex' flexGrow={1} overflow='auto' maxHeight={{xs: '150px', lg:'250px'}}>
+          <Box display='flex' flexGrow={1} overflow='auto' maxHeight={{xs: '120px', sm: '300px'}}>
           <Burger ingredients={props.ingredients} scale={3}/>
           </Box>
           
