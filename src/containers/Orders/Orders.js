@@ -35,7 +35,7 @@ class Orders extends Component {
         {this.props.loading ? (
           <ProgressCircle style={{ height: '20vw', width: '20vw' }} />
         ) : (
-          <Box width={{ xs: '90%', sm: 'auto' }} height='100%'>
+          <Box width={{ xs: '100%', sm: 'auto' }} height='100%'>
             <List>
               {this.props.orders.sort(this.compareDates).map((order) => (
                 <Order

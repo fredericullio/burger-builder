@@ -10,10 +10,6 @@ class Checkout extends Component {
     contactDataOn: false,
   };
 
-  UNSAFE_componentWillMount () {
-    this.props.purchaseInit();
-  }
-
   checkoutCancelHandler = () => {
     this.props.history.push('/');
   };

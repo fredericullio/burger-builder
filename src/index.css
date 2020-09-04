@@ -18,6 +18,19 @@ body {
   border-radius: 10px;
 }
 
+::-moz-horizontal-scrollbar {
+  width: 10px;
+}
+
+::-moz-horizontal-scrollbar-track {
+  box-shadow: inset 0 0 5px #D39952;
+}
+
+::-moz-horizontal-scrollbar-thumb {
+  background: #8F5E1E;
+  border-radius: 10px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

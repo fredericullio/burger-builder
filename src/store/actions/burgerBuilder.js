@@ -1,7 +1,5 @@
 import actionTypes from './actionTypes';
 
-import axios from '../../axios-orders';
-
 export const addIngredient = (ingredientType) => {
   return {
     type: actionTypes.ADD_INGREDIENT,
@@ -9,7 +7,7 @@ export const addIngredient = (ingredientType) => {
   };
 };
 
-export const fetchIngredientsFailed = () => {
+export const fetchIngredientsFailure = () => {
   return {
     type: actionTypes.FETCH_INGREDIENTS_FAILED,
   };
@@ -38,23 +36,8 @@ export const addDeliveryCost = (newMethod, oldMethod) => {
   }
 }
 
-export const initIngredients = () => (dispatch) => {
-  if (
-    localStorage.getItem('price') &&
-    localStorage.getItem('ingredients')
-  ) {
-    dispatch(
-      setIngredients({
-        Ingredients: JSON.parse(localStorage.getItem('ingredients')),
-        price: Number(localStorage.getItem('price')),
-      })
-    );
-  } else {
-    axios
-      .get('https://burger-builder-13728.firebaseio.com/init.json')
-      .then((res) => {
-        dispatch(setIngredients(res.data));
-      })
-      .catch(() => this.setState(fetchIngredientsFailed()));
+export const initIngredients = () => {
+  return {
+    type: actionTypes.INIT_INGREDIENTS
   }
 };

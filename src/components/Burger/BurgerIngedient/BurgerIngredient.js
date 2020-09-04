@@ -86,9 +86,9 @@ class BurgerIngredient extends Component {
       case 'bread-bottom':
         ingredient = (
           <Box
-            height={{ xs: '40px', xl: '80px' }}
-            width={{ xs: '250px', xl: '500px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            height={{ xs: `${40/(this.props.scale || 1)}px`, lg: `${80/(this.props.scale || 1)}px` }}
+            width={{ xs: `${250/(this.props.scale || 1)}px`, lg: `${500/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             className={classes.breadBottom}
           />
@@ -97,9 +97,9 @@ class BurgerIngredient extends Component {
       case 'bread-top':
         ingredient = (
           <Box
-            height={{ xs: '75px', xl: '150px' }}
-            width={{ xs: '260px', xl: '520px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            height={{ xs: `${75/(this.props.scale || 1)}px`, lg: `${150/(this.props.scale || 1)}px` }}
+            width={{ xs: `${260/(this.props.scale || 1)}px`, lg: `${520/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             position='relative'
             className={classes.breadTop}
@@ -130,9 +130,9 @@ class BurgerIngredient extends Component {
       case 'meat':
         ingredient = (
           <Box
-            width={{ xs: '240px', xl: '480px' }}
-            height={{ xs: '25px', xl: '50px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            width={{ xs: `${240/(this.props.scale || 1)}px`, lg: `${480/(this.props.scale || 1)}px` }}
+            height={{ xs: `${25/(this.props.scale || 1)}px`, lg: `${50/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             borderRadius='15px'
             className={classes.meat}
@@ -142,9 +142,9 @@ class BurgerIngredient extends Component {
       case 'cheese':
         ingredient = (
           <Box
-            width={{ xs: '300px', xl: '600px' }}
-            height={{ xs: '10px', xl: '20px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            width={{ xs: `${300/(this.props.scale || 1)}px`, lg: `${600/(this.props.scale || 1)}px` }}
+            height={{ xs: `${10/(this.props.scale || 1)}px`, lg: `${20/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             borderRadius='20px'
             className={classes.cheese}
@@ -154,9 +154,9 @@ class BurgerIngredient extends Component {
       case 'salad':
         ingredient = (
           <Box
-            width={{ xs: '275px', xl: '550px' }}
-            height={{ xs: '20px', xl: '40px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            width={{ xs: `${275/(this.props.scale || 1)}px`, lg: `${550/(this.props.scale || 1)}px` }}
+            height={{ xs: `${20/(this.props.scale || 1)}px`, lg: `${40/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             borderRadius='20px'
             className={classes.salad}
@@ -166,9 +166,9 @@ class BurgerIngredient extends Component {
       case 'bacon':
         ingredient = (
           <Box
-            width={{ xs: '265px', xl: '580px' }}
-            height={{ xs: '6px', xl: '12px' }}
-            mt={{ xs: '2px', xl: '5px' }}
+            width={{ xs: `${265/(this.props.scale || 1)}px`, lg: `${580/(this.props.scale || 1)}px` }}
+            height={{ xs: `${6/(this.props.scale || 1)}px`, lg: `${12/(this.props.scale || 1)}px` }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             mx='auto'
             className={classes.bacon}
           />
@@ -177,10 +177,10 @@ class BurgerIngredient extends Component {
       case 'tomato':
         ingredient = (
           <Box
-            width={{ xs: '200px', xl: '400px' }}
-            height={{ xs: '17px', xl: '35px' }}
+            width={{ xs: `${200/(this.props.scale || 1)}px`, lg: `${400/(this.props.scale || 1)}px` }}
+            height={{ xs: `${17/(this.props.scale || 1)}px`, lg: `${35/(this.props.scale || 1)}px` }}
             mx='auto'
-            mt={{ xs: '2px', xl: '5px' }}
+            mt={{ xs: `${2/(this.props.scale || 1)}px`, lg: `${5/(this.props.scale || 1)}px` }}
             className={classes.tomato}
           />
         );

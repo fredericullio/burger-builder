@@ -8,7 +8,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './util/theme';
 import createSagaMiddleware from 'redux-saga';
 
-import { logoutSaga } from './store/sagas/auth';
+import rootSaga from './store/sagas';
 
 import './index.css';
 import App from './App';
@@ -24,7 +24,8 @@ const store = createStore(
   composeEnhancers((applyMiddleware(thunk, sagaMiddleware)))
 );
 
-sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(rootSaga);
+
 
 ReactDOM.render(
   <Provider store={store}>

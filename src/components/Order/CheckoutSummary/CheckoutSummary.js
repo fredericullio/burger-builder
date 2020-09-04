@@ -16,18 +16,21 @@ const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.down('sm')]: {
       transform: 'scale(0.9)',
-      height: '90%'
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '700px'
     },
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '20px 20px 0',
-    height: '80%',
-    justifyContent: 'space-around'
+    padding: '20px',
+    maxHeight: '90%',
+    justifyContent: 'space-around',
+    boxSizing: 'border-box'
   },
   paper: {
     padding: '20px',
-  }
+  },
 }));
 
 const CheckoutSummary = (props) => {
@@ -51,12 +54,13 @@ const CheckoutSummary = (props) => {
             Bon Appétit!
           </Box>
 
-          <Box width='100%' mx='auto' overflow='auto'>
+          <Box className={classes.brgrContainer} width='100%' overflow='auto' >
             <Burger ingredients={props.ingredients} />
           </Box>
+          <Box width={{xs: '100%', lg: '80%'}}>
           <Paper elevation={8} className={classes.paper}>
             <Typography align='center' style={{ padding: 'auto', fontFamily: 'Times New Roman, serif' }}>
-              Behold your burger of choice.{<br />} Please, comfirm these are
+              Behold your burger of choice.{<br />} Please, confirm these are
               the ingredients you desire.
             </Typography>
           </Paper>
@@ -66,7 +70,6 @@ const CheckoutSummary = (props) => {
             justifyContent='space-between'
             pb='20px'
             pt='20px'
-            width='100%'
           >
             <PaperButton
               onClick={props.checkoutCancel}
@@ -82,8 +85,9 @@ const CheckoutSummary = (props) => {
               color='primary'
               variant='contained'
             >
-              COMFIRM
+              CONFIRM
             </PaperButton>
+          </Box>
           </Box>
       </Paper>
     </Box>

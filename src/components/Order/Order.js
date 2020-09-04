@@ -2,7 +2,7 @@ import React from 'react';
 
 import moment from 'moment';
 
-// import Burger from '../Burger/Burger';
+import Burger from '../Burger/Burger';
 
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,9 @@ const Order = (props) => {
           {name}:
         </Box>{' '}
         {content}
+        <Box>
         <br />
+        </Box>
       </React.Fragment>
     );
   };
@@ -35,17 +37,23 @@ const Order = (props) => {
         display='flex'
         flexDirection='column'
         width={{xs: '100%', sm: '500px'}}
-      >
+      ><Box display='flex' flexDirection={{xs: 'column', sm: 'row'}} alignItems='center'>
+
+      
           <Box
-          borderRadius='6px'
+              style={{transition: 'all 0.8s ease-out'}}
+              borderRadius='6px'
               boxSizing='border-box'
               display='flex'
-              width={{xs: '100%', sm: 'fit-content'}}
+              maxWidth={{xs: '100%', sm: '320px', lg: '250px'}}
               padding='20px'
               marginBottom='20px'
               boxShadow='gray 3px 3px 6px'
+              
           >
-            <Typography align='left'>
+            <Typography align='left' style={{textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap'}}>
               <Box component='span' fontSize={{ xs: 12, sm: 14 }}>
                 {createDisplayItem('Date', moment(props.date).format('llll'))}
 
@@ -58,6 +66,12 @@ const Order = (props) => {
               </Box>
             </Typography>
           </Box>
+          <Box display='flex' flexGrow={1} overflow='auto' maxHeight={{xs: '150px', lg:'250px'}}>
+          <Burger ingredients={props.ingredients} scale={3}/>
+          </Box>
+          
+      
+          </Box>
           <Box display='flex' flexDirection='column'>
             <Box component='span' fontWeight='bold'>
               {`Ingredients: `}
@@ -66,7 +80,7 @@ const Order = (props) => {
               display='flex'
               justifyContent='center'
               mt='20px'
-              flexDirection={{xs: 'column', sm: 'row'}}
+              flexWrap='wrap'
             >
               {Object.keys(props.ingredients).filter(ingName => props.ingredients[ingName] > 0).map((ingName) => {
                      return <Box

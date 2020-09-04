@@ -7,6 +7,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import ProgressCircle from '../../components/UI/ProgressCircle/ProgressCircle';
+import PurchasedModal from '../../components/Order/PurchasedModal/PurchasedModal';
 import * as actions from '../../store/actions';
 import axios from '../../axios-orders';
 
@@ -14,7 +15,8 @@ import Box from '@material-ui/core/Box';
 
 export class BurgerBuilder extends Component {
   state = {
-    purchasing: false
+    purchasing: false,
+    showPurchasedModal: this.props.purchased
   };
 
   purchasingOn = () => {
@@ -25,17 +27,17 @@ export class BurgerBuilder extends Component {
     this.setState({purchasing: false});
   }
 
+  closePurchasedModal = () => {
+    this.setState({showPurchasedModal: false});
+    this.props.purchaseInit();
+
+  }
+
   componentDidMount() {
     if (!this.props.ingredients) {
       this.props.initIngredients();
     }
   }
-
-  // componentWillUnmount() {
-  //   if (this.props.purchasing) {
-  //     this.props.purchaseOff();
-  //   }
-  // }
 
 
   purchaseContinueHandler = () => {
@@ -54,6 +56,12 @@ export class BurgerBuilder extends Component {
 
     return (
       <React.Fragment>
+         <Modal
+          show={this.props.purchased}
+          modalClosed={this.closePurchasedModal}
+        >
+          <PurchasedModal close={this.closePurchasedModal}/>
+        </Modal>
         <Modal
           show={this.state.purchasing}
           modalClosed={this.purchasingOff}
@@ -101,15 +109,16 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     purchasable: state.burgerBuilder.purchasable,
-    purchasing: state.purchase.purchasing,
     error: state.burgerBuilder.error,
+    purchased: state.order.purchased
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     initIngredients: () => dispatch(actions.initIngredients()),
-    purchaseOff: () => dispatch(actions.purchaseOff()),
+    purchaseInit: () => dispatch(actions.purchaseInit())
+
   };
 };
 

@@ -44,7 +44,7 @@ const Burger = (props) => {
             }}
             timeout={500}
           >
-            <BurgerIngredient type={ingKey} />
+            <BurgerIngredient scale={props.scale} type={ingKey} />
           </CSSTransition>
         );
       });
@@ -61,16 +61,15 @@ const Burger = (props) => {
       fontSize='1.2rem'
       p='20px 0 20px'
       m='auto'
-      style={{transform: `scale(${props.scale || 1})`}}
     >
-      <BurgerIngredient type='bread-top' />
+      <BurgerIngredient scale={props.scale} type='bread-top' />
      
         <TransitionGroup>{transformedIngredients}</TransitionGroup>
      
         {transformedIngredients.length < 1 && <p>Please start adding ingredients!</p>}
    
 
-      <BurgerIngredient type='bread-bottom' />
+      <BurgerIngredient scale={props.scale} type='bread-bottom' />
     </Box>
   );
 };

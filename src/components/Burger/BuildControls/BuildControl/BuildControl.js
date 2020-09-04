@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     '&:disabled': {
       backgroundColor: '#AC9980',
       color: '#ccc',
+      boxShadow: 'none',
+      border: 'solid 1px ' + theme.palette.grey[600],
+      transform: 'scale(0.95,0.95)'
     },
   },
   more: {
